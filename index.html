@@ -10,34 +10,36 @@
             background-color: #1a1a1a;
             color: white;
         }
-        #comments {
-            max-width: 800px;
-            margin: 0 auto;
-        }
         #disqus_thread {
             max-width: 800px;
             margin: 0 auto;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
     <div id="disqus_thread"></div>
     <script>
-        var disqus_config = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const type = urlParams.get('type');
-            const id = urlParams.get('id');
-            
-            this.page.identifier = `${type}_${id}`;
-            this.page.url = window.location.href;
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            var disqus_config = function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const type = urlParams.get('type');
+                const id = urlParams.get('id');
+                
+                this.page.identifier = `${type}_${id}`;
+                this.page.url = 'https://ikemensenpai.github.io/crunchyrollcomments.github.io/?type=' + type + '&id=' + id;
+                this.page.title = type === 'series' ? 'Series Discussion' : 'Episode Discussion';
+            };
 
-        (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://crunchyrollcomments.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://crunchyrollcomments.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
     </script>
     <noscript>Please enable JavaScript to view the comments.</noscript>
 </body>
