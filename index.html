@@ -10,19 +10,60 @@
             background-color: #1a1a1a;
             color: white;
         }
+        .header {
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+            padding: 15px;
+            background-color: #f47521;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        .loading.show {
+            display: block;
+        }
         #disqus_thread {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             background-color: #2a2a2a;
             border-radius: 8px;
+            min-height: 300px;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #f47521;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1 id="pageTitle">Loading...</h1>
+    </div>
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading comments...</p>
+    </div>
     <div id="disqus_thread"></div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const loading = document.getElementById('loading');
+            const pageTitle = document.getElementById('pageTitle');
+            loading.classList.add('show');
+
             var disqus_config = function () {
                 const urlParams = new URLSearchParams(window.location.search);
                 const type = urlParams.get('type');
@@ -31,6 +72,16 @@
                 this.page.identifier = `${type}_${id}`;
                 this.page.url = 'https://ikemensenpai.github.io/crunchyrollcomments.github.io/?type=' + type + '&id=' + id;
                 this.page.title = type === 'series' ? 'Series Discussion' : 'Episode Discussion';
+                
+                // Update page title
+                pageTitle.textContent = this.page.title + ' #' + id;
+            };
+
+            // Hide loading when Disqus loads
+            window.disqus_config = function() {
+                this.callbacks.onReady = [function() {
+                    loading.classList.remove('show');
+                }];
             };
 
             (function() {
