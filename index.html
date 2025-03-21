@@ -63,19 +63,18 @@
             const loading = document.getElementById('loading');
             const pageTitle = document.getElementById('pageTitle');
 
+            // Update title immediately
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type');
+            const id = urlParams.get('id');
+            const title = type === 'series' ? 'Series Discussion' : 'Episode Discussion';
+            pageTitle.textContent = title + ' #' + id;
+
             var disqus_config = function () {
-                const urlParams = new URLSearchParams(window.location.search);
-                const type = urlParams.get('type');
-                const id = urlParams.get('id');
-                
                 this.page.identifier = `${type}_${id}`;
                 this.page.url = 'https://ikemensenpai.github.io/crunchyrollcomments.github.io/?type=' + type + '&id=' + id;
-                this.page.title = type === 'series' ? 'Series Discussion' : 'Episode Discussion';
+                this.page.title = title;
                 
-                // Update page title immediately
-                pageTitle.textContent = this.page.title + ' #' + id;
-
-                // Add callback to hide loading spinner
                 this.callbacks = {
                     onReady: [function() {
                         loading.classList.remove('show');
