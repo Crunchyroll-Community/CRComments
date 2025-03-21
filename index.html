@@ -71,8 +71,14 @@
             const urlParams = new URLSearchParams(window.location.search);
             const type = urlParams.get('type');
             const id = urlParams.get('id');
-            const title = type === 'series' ? 'Series Discussion' : 'Episode Discussion';
-            pageTitle.textContent = title + ' #' + id;
+            const seriesTitle = urlParams.get('series');
+            const title = urlParams.get('title');
+
+            if (type === 'series') {
+                pageTitle.textContent = title || 'Series Discussion';
+            } else {
+                pageTitle.textContent = `${seriesTitle} - ${title}`;
+            }
 
             var disqus_config = function () {
                 this.page.identifier = `${type}_${id}`;
