@@ -13,11 +13,31 @@
             background-color: #1a1a1a;
             color: white;
         }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #ffffff;
+                color: #1a1a1a;
+            }
+            #disqus_thread {
+                background-color: #f5f5f5;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: white;
+            }
+            #disqus_thread {
+                background-color: #2a2a2a;
+            }
+        }
+
         #disqus_thread {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #2a2a2a;
             border-radius: 8px;
             min-height: 300px;
         }
