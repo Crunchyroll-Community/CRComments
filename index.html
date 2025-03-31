@@ -10,7 +10,7 @@
             --bg-color: #1a1a1a;
             --text-color: white;
             --comment-bg: #2a2a2a;
-            --header-height: 60px;
+            --header-height: 40px;
         }
 
         body.light-theme {
@@ -31,17 +31,21 @@
         .header {
             height: var(--header-height);
             padding: 0 20px;
-            background-color: #f47521;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
         }
 
         .header-left {
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .header-left h1 {
+            font-size: 16px;
+            margin: 0;
         }
 
         .header-right {
@@ -51,16 +55,16 @@
         }
 
         .logo {
-            height: 32px;
+            height: 24px;
             width: auto;
         }
 
         .theme-toggle, .github-link {
             background: none;
             border: none;
-            color: white;
+            color: var(--text-color);
             cursor: pointer;
-            font-size: 24px;
+            font-size: 20px;
             padding: 5px;
             transition: transform 0.2s;
         }
@@ -96,8 +100,10 @@
     </div>
     <div id="disqus_thread"></div>
 
+    <!-- Move the theme toggle script inside the DOMContentLoaded event -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Existing Disqus configuration
             const urlParams = new URLSearchParams(window.location.search);
             const type = urlParams.get('type');
             const id = urlParams.get('id');
@@ -108,24 +114,29 @@
                 this.page.title = type === 'series' ? 'Series Discussion' : 'Episode Discussion';
             };
 
+            // Load Disqus
             (function() {
                 var d = document, s = d.createElement('script');
                 s.src = 'https://crunchyrollcomments.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
                 (d.head || d.body).appendChild(s);
             })();
+
+            // Theme toggle functionality
+            const themeToggle = document.querySelector('.theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('light-theme');
+                    localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+                });
+
+                // Load saved theme preference
+                if (localStorage.getItem('theme') === 'light') {
+                    document.body.classList.add('light-theme');
+                }
+            }
         });
     </script>
     <noscript>Please enable JavaScript to view the comments.</noscript>
-    // Add theme toggle functionality
-    document.querySelector('.theme-toggle').addEventListener('click', () => {
-        document.body.classList.toggle('light-theme');
-        localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
-    });
-
-    // Load saved theme preference
-    if (localStorage.getItem('theme') === 'light') {
-        document.body.classList.add('light-theme');
-    }
 </body>
 </html>
