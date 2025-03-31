@@ -60,10 +60,15 @@
         #disqus_thread {
             max-width: 800px;
             margin: 20px auto;
-            padding: 20px;
+            padding: 20px 30px;  /* Increased horizontal padding */
             background-color: #2a2a2a;
             border-radius: 8px;
             min-height: 300px;
+            .container {
+                padding: 0 20px;
+                width: 100%;
+                box-sizing: border-box;
+            }
         }
     </style>
 </head>
@@ -80,7 +85,9 @@
             </a>
         </div>
     </div>
-    <div id="disqus_thread"></div>
+    <div class="container">
+        <div id="disqus_thread"></div>
+    </div>
 
     <!-- Move the theme toggle script inside the DOMContentLoaded event -->
     <script>
