@@ -34,3 +34,7 @@ This repository contains a simple, dark-themed HTML page that loads [Disqus](htt
 ## 📄 License
 
 This project is licensed under the **MIT License** — feel free to use and modify it.
+
+---
+
+Made by [Ayush](https://github.com/IkemenSenpai)
